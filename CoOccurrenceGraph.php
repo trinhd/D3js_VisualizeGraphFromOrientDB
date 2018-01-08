@@ -24,7 +24,7 @@
         </div> 
         <!-- <button type="button" onclick="createGraphOfSubject('')">Change Content</button> -->
     </div>
-    <div align='center' id="d3_selectable_force_directed_graph" style="width: 930px; height: 600px; margin-top: -38px; margin-left: 417px; margin-bottom: 12px">
+    <div align='center' id="d3_selectable_force_directed_graph" style="width: 930px; height: 600px; margin-top: -38px; margin-left: 302px; margin-bottom: 12px">
         <svg />
     </div>
 

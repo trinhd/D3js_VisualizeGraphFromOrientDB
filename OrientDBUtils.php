@@ -10,8 +10,8 @@ $password = '12345';
 $database = 'CoOccurrenceGraph';
 $dbuser = 'admin';
 $dbpassword = 'admin';
-$label_subject = 'subject';
-$label_id = 'id';
+$label_subject = 'topic';
+$label_id = 'name';
 $v_table = 'dinh';
 
 $client;
@@ -89,9 +89,11 @@ function queryDB($subject){
 	global $label_subject;
 	global $label_id, $v_table;
 
-	$sql = "SELECT FROM " . $v_table . " WHERE ". $label_subject ." = '". $subject . "'";
+	$sql = "SELECT FROM " . $v_table . " WHERE ". $label_subject ." = '". $subject . "' LIMIT -1";
 
 	$result = $client->query($sql);
+
+	//var_dump($result);
 
 	$arrNodes = "";
 	$arrDict = array();
@@ -107,7 +109,7 @@ function queryDB($subject){
 		else $arrNodes = $arrNodes . ", { id : '" . $data[$label_id] . "'}";
 		$arrDict["$rid"] = $data[$label_id];
 
-		$sql2 = "SELECT out(cooccurr_with) FROM " . $v_table . " WHERE @rid = ". $rid;
+		$sql2 = "SELECT out(cooccurr_with) FROM " . $v_table . " WHERE @rid = ". $rid . " LIMIT -1";
 		$all_out = $client->query($sql2);
 
 		$arrTemp = array();
@@ -124,7 +126,7 @@ function queryDB($subject){
 			}
 		}
 
-		if (!empty($arrTemp)) $arrOut[$data['id']] = $arrTemp;
+		if (!empty($arrTemp)) $arrOut[$data[$label_id]] = $arrTemp;
 
 		//print_r($data['ID'] . '<br>');
 		//print_r($rid . '<br>');
