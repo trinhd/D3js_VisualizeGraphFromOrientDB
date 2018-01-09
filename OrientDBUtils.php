@@ -71,7 +71,7 @@ function getToken(){
 function getSubject(){
 	global $client;
 	global $label_subject, $v_table;
-	$sql = "SELECT DISTINCT(". $label_subject .") FROM ". $v_table;
+	$sql = "SELECT DISTINCT(". $label_subject .") FROM ". $v_table . " LIMIT -1";
 
 	$result = $client->query($sql);
 	$subject = array();
@@ -105,8 +105,10 @@ function queryDB($subject){
 
 		// if ($arrNodes == "") $arrNodes = '{ "id" : "' . $data['ID'] . '"}';
 		// else $arrNodes = $arrNodes . ', { "id" : "' . $data['ID'] . '"}';
-		if ($arrNodes == "") $arrNodes = "{ id : '" . $data[$label_id] . "'}";
-		else $arrNodes = $arrNodes . ", { id : '" . $data[$label_id] . "'}";
+		$vertexName = str_replace("'", "\'", $data[$label_id]);
+
+		if ($arrNodes == "") $arrNodes = "{ id : '" . $vertexName . "'}";
+		else $arrNodes = $arrNodes . ", { id : '" . $vertexName . "'}";
 		$arrDict["$rid"] = $data[$label_id];
 
 		$sql2 = "SELECT out(cooccurr_with) FROM " . $v_table . " WHERE @rid = ". $rid . " LIMIT -1";
